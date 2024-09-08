@@ -1,0 +1,159 @@
+import java.util.Scanner;
+
+public class InheritanceTest {
+
+    // Base class Person
+    static class Person {
+        // Data members
+        private String name;
+        private int birthYear;
+        private double height;
+        private double weight;
+        private String address;
+
+        // Constructor to initialize Person object
+        public Person(String name, int birthYear, double height, double weight, String address) {
+            this.name = name;
+            this.birthYear = birthYear;
+            this.height = height;
+            this.weight = weight;
+            this.address = address;
+        }
+
+        // Method to calculate age
+        public int calculateAge(int currentYear) {
+            return currentYear - birthYear;
+        }
+
+        // Getters
+        public String getName() { return name; }
+        public int getBirthYear() { return birthYear; }
+        public double getHeight() { return height; }
+        public double getWeight() { return weight; }
+        public String getAddress() { return address; }
+    }
+
+    // Derived class Student
+    static class Student extends Person {
+        // Data members
+        private String rollNo;
+        private double[] marks;
+
+        // Constructor to initialize Student object
+        public Student(String name, int birthYear, double height, double weight, String address, String rollNo, double[] marks) {
+            super(name, birthYear, height, weight, address);
+            this.rollNo = rollNo;
+            this.marks = marks;
+        }
+
+        // Method to calculate average marks
+        public double calculateAvg() {
+            double total = 0;
+            for (double mark : marks) {
+                total += mark;
+            }
+            return total / marks.length;
+        }
+
+        // Getter
+        public String getRollNo() { return rollNo; }
+        public double[] getMarks() { return marks; }
+    }
+
+    // Derived class Employee
+    static class Employee extends Person {
+        // Data members
+        private String empId;
+        private double salary;
+
+        // Constructor to initialize Employee object
+        public Employee(String name, int birthYear, double height, double weight, String address, String empId, double salary) {
+            super(name, birthYear, height, weight, address);
+            this.empId = empId;
+            this.salary = salary;
+        }
+
+        // Method to calculate tax (assuming a simple tax rate of 10%)
+        public double calculateTax() {
+            return salary * 0.10;
+        }
+
+        // Getter
+        public String getEmpId() { return empId; }
+        public double getSalary() { return salary; }
+    }
+
+    // Helper method to safely read an integer input
+    public static int readInt(String prompt, Scanner scanner) {
+        System.out.print(prompt);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter an integer.");
+            scanner.next(); // Clear the invalid input
+            System.out.print(prompt);
+        }
+        return scanner.nextInt();
+    }
+
+    // Helper method to safely read a double input
+    public static double readDouble(String prompt, Scanner scanner) {
+        System.out.print(prompt);
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.next(); // Clear the invalid input
+            System.out.print(prompt);
+        }
+        return scanner.nextDouble();
+    }
+
+    // Helper method to safely read a string input
+    public static String readString(String prompt, Scanner scanner) {
+        System.out.print(prompt);
+        return scanner.next();
+    }
+
+    // Main class for testing
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Get current year
+        int currentYear = readInt("Enter the current year: ", scanner);
+        
+        // Get Student details
+        String studentName = readString("Enter name for Student: ", scanner);
+        int studentBirthYear = readInt("Enter birth year for Student: ", scanner);
+        double studentHeight = readDouble("Enter height for Student (in cm): ", scanner);
+        double studentWeight = readDouble("Enter weight for Student (in kg): ", scanner);
+        String studentAddress = readString("Enter address for Student: ", scanner);
+        String studentRollNo = readString("Enter roll number for Student: ", scanner);
+        int numMarks = readInt("Enter number of marks for Student: ", scanner);
+        double[] studentMarks = new double[numMarks];
+        for (int i = 0; i < numMarks; i++) {
+            studentMarks[i] = readDouble("Enter mark " + (i + 1) + ": ", scanner);
+        }
+        Student student = new Student(studentName, studentBirthYear, studentHeight, studentWeight, studentAddress, studentRollNo, studentMarks);
+
+        // Get Employee details
+        String employeeName = readString("Enter name for Employee: ", scanner);
+        int employeeBirthYear = readInt("Enter birth year for Employee: ", scanner);
+        double employeeHeight = readDouble("Enter height for Employee (in cm): ", scanner);
+        double employeeWeight = readDouble("Enter weight for Employee (in kg): ", scanner);
+        String employeeAddress = readString("Enter address for Employee: ", scanner);
+        String employeeId = readString("Enter employee ID for Employee: ", scanner);
+        double employeeSalary = readDouble("Enter salary for Employee: ", scanner);
+        Employee employee = new Employee(employeeName, employeeBirthYear, employeeHeight, employeeWeight, employeeAddress, employeeId, employeeSalary);
+
+        // Display information
+        System.out.println("\nStudent Details:");
+        System.out.println("Name: " + student.getName());
+        System.out.println("Age: " + student.calculateAge(currentYear));
+        System.out.println("Average Marks: " + student.calculateAvg());
+
+        System.out.println("\nEmployee Details:");
+        System.out.println("Name: " + employee.getName());
+        System.out.println("Age: " + employee.calculateAge(currentYear));
+        System.out.println("Tax: Rs " + employee.calculateTax());
+
+        // Close the scanner
+        scanner.close();
+    }
+}
