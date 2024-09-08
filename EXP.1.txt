@@ -1,0 +1,140 @@
+Q.1)Program to display particular day when date is entered using command line
+argument.
+
+----->
+
+import java.util.Scanner;
+
+public class Calendar {
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the user
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user for the day
+        System.out.print("Enter day: ");
+        int day = scanner.nextInt();
+
+        // Prompt the user for the month
+        System.out.print("Enter month: ");
+        int month = scanner.nextInt();
+
+        // Prompt the user for the year
+        System.out.print("Enter year: ");
+        int year = scanner.nextInt();
+
+        // Calculate the day of the week using Zeller's Congruence (as before)
+        int originalMonth = month;
+        if (month == 1 || month == 2) {
+            month += 12;
+            year -= 1;
+        }
+
+        int K = year % 100; // Year of the century
+        int J = year / 100; // Zero-based century
+
+        // Zeller's Congruence formula to calculate day of the week
+        int f = day + (13 * (month + 1)) / 5 + K + K / 4 + J / 4 + 5 * J;
+        int dayOfWeek = f % 7;
+
+        // Use switch case to display the particular day
+        String dayName;
+        switch (dayOfWeek) {
+            case 0:
+                dayName = "Saturday";
+                break;
+            case 1:
+                dayName = "Sunday";
+                break;
+            case 2:
+                dayName = "Monday";
+                break;
+            case 3:
+                dayName = "Tuesday";
+                break;
+            case 4:
+                dayName = "Wednesday";
+                break;
+            case 5:
+                dayName = "Thursday";
+                break;
+            case 6:
+                dayName = "Friday";
+                break;
+            default:
+                dayName = "Invalid";
+        }
+
+        // Print the result
+        System.out.println("The Day for given date is " + dayName);
+
+        // Calculate the difference from the current date manually
+        // Get current date
+        int currentDay = 11; // Replace with the actual current date
+        int currentMonth = 8; // Replace with the actual current month
+        int currentYear = 2024; // Replace with the actual current year
+
+        // Calculate differences
+        int yearDifference = currentYear - year;
+        int monthDifference = currentMonth - originalMonth;
+        int dayDifference = currentDay - day;
+
+        // Adjust for negative values
+        if (dayDifference < 0) {
+            dayDifference += daysInMonth(currentMonth - 1, currentYear);
+            monthDifference -= 1;
+        }
+        if (monthDifference < 0) {
+            monthDifference += 12;
+            yearDifference -= 1;
+        }
+
+        // Print the difference
+        System.out.println("Difference from current date:");
+        System.out.println("Years: " + yearDifference);
+        System.out.println("Months: " + monthDifference);
+        System.out.println("Days: " + dayDifference);
+
+        // Close the scanner
+        scanner.close();
+    }
+
+    // Helper method to find the number of days in a month
+    public static int daysInMonth(int month, int year) {
+        switch (month) {
+            case 1: // January
+            case 3: // March
+            case 5: // May
+            case 7: // July
+            case 8: // August
+            case 10: // October
+            case 12: // December
+                return 31;
+            case 4: // April
+            case 6: // June
+            case 9: // September
+            case 11: // November
+                return 30;
+            case 2: // February
+                if (isLeapYear(year)) {
+                    return 29;
+                } else {
+                    return 28;
+                }
+            default:
+                return 0; // Invalid month
+        }
+    }
+
+    // Helper method to determine if a year is a leap year
+    public static boolean isLeapYear(int year) {
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                return year % 400 == 0;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+}
