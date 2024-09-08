@@ -1,0 +1,71 @@
+EXP.3) Create a class called Employee that includes three pieces of information as instance 
+       variables- first name, a last name and a monthly salary. Your class should have a 
+       constructor that initializes the three instance variables. Provide a set and a get method for 
+       each instance variable. If the monthly salary is not positive, set it to 0.0. Write a test 
+       application named EmployeeTest that demonstrates class Employee's capabilities. Create 
+       two Employee objects and display each object's yearly salary. Then give each Employee a 
+       10% raise and display each Employee's yearly salary again. 
+--->
+
+class Employee{
+                      String Firstname;
+                      String Lastname;
+                      double Monthlysalary;
+                      public Employee(String Firstname,String Lastname,double Monthlysalary){
+                          this.Firstname=Firstname;
+                          this.Lastname=Lastname;
+                      
+                      if(Monthlysalary>0){
+                          this.Monthlysalary=Monthlysalary;
+                      }
+                    else{
+                        
+                        this.Monthlysalary=0.0;
+                    }
+               }
+    public String getFirstname(){
+        
+        return Firstname;
+    }           
+    public void setFirstname(String Firstname){
+        
+        this.Firstname=Firstname;
+    }         
+    public String getLastname(){
+        
+        return Lastname;
+    }        
+      public void setLastname(String Lastname){
+        
+        this.Lastname=Lastname;
+    }   
+    public double getMonthlysalary(){
+        
+        return Monthlysalary;
+    }
+    public double getYearlysalary(){
+        
+        return Monthlysalary*12;
+    }
+    public void applyRaise(double percentage){
+        
+        Monthlysalary*=(1+percentage/100);
+    }
+}
+public class EmployeeTest{
+    
+    public static void main(String[] args){
+        
+        Employee emp1=new Employee("karan","ghatage",5000.0);
+        Employee emp2=new Employee("aniket","kamble",6000.0);
+        
+        System.out.println("Employee 1 Yearlysalary:-$"+emp1.getYearlysalary());
+        System.out.println("Employee 2 Yearlysalary:-$"+emp2.getYearlysalary());
+        
+        emp1.applyRaise(10);
+        emp2.applyRaise(10);
+        
+         System.out.println("Employee 1 Yearlysalary:-$"+emp1.getYearlysalary());
+        System.out.println("Employee 2 Yearlysalary:-$"+emp2.getYearlysalary());
+    }
+}
